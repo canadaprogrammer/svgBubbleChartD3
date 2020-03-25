@@ -12,7 +12,7 @@ var svg = d3.select('svg');
 var selection = svg.selectAll('g')
     .data(values)
     .enter().append('g')
-    .attr('transform', 'translate(10,10)');
+    .attr('transform', 'translate(50,10)');
 selection.append('circle')
     .attr('cx', (d,i) => d.price/2)
     .attr('cy', (d,i) => (4000 - d.sqft)/(4000/400))
@@ -33,14 +33,25 @@ function print(home) {
 var width = 400;
 var height = 400;
 // X-axis
-var xScale = d3.scaleLinear().domain([0,width*2]).range([0,width]);
+var xScale = d3.scaleLinear().domain([0,width*2]).range([40,width + 40]);
 var xAxis = d3.axisBottom(xScale);
 svg.append('g')
     .attr('transform','translate(10,410)')
     .call(xAxis);
+
 // Y-axis
 var yScale = d3.scaleLinear().domain([0,height*10]).range([height,0]);
 var yAxis = d3.axisRight(yScale);
 svg.append('g')
-    .attr('transform', 'translate(10,10)')
+    .attr('transform', 'translate(50,10)')
     .call(yAxis);
+
+// chart labels
+svg.append("text")             
+    .attr("transform", "translate(" + (width/2 + 50) + " ," + (height +  50) + ")")
+    .style("text-anchor", "middle")
+    .text("Price ($1000)");
+svg.append('text')
+    .attr('transform', 'translate(0,' + height/2 +')')
+    .style('text-anchor','start')
+    .text('SQFT');
